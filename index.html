@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEX CORPORATION | Free Fire Elite</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.27/build/spline-viewer.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-purple: #c724fa;
+            --matrix-green: #00ff88;
+            --cyber-blue: #00ccff;
+            --dark-void: #0a0515;
+            --card-bg: rgba(20, 5, 40, 0.6);
+        }
+
+        body {
+            margin: 0;
+            background: var(--dark-void);
+            color: white;
+            font-family: 'Kanit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 3D Background */
+        #spline-bg {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        spline-viewer {
+            filter: hue-rotate(-5deg) brightness(0.8) contrast(1.2);
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(199, 36, 250, 0.2);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--neon-purple), var(--cyber-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .discord-btn {
+            background: #5865F2;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .discord-btn:hover {
+            background: #4752c4;
+            transform: translateY(5px);
+            box-shadow: 0 5px 10px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            background: linear-gradient(90deg, var(--matrix-green), var(--cyber-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            line-height: 1.2;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+
+        #typing {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-purple);
+            height: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(199, 36, 250, 0.3);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--matrix-green);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--matrix-green);
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feature-desc {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 2.6;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2.5rem;
+            border: 1px solid rgba(199, 36, 250, 0.3);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s;
+        }
+
+        .pricing-card.popular {
+            border: 1px solid var(--matrix-green);
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--matrix-green);
+            color: black;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .plan-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--neon-purple), var(--cyber-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            color: var(--matrix-green);
+            margin-right: 0.5rem;
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--cyber-blue));
+            color: black;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(199, 36, 250, 0.4);
+        }
+
+        /* Proof Section */
+        .proof {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .proof h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .proof-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 204, 255, 0.2);
+        }
+
+        .proof-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .proof-author {
+            font-weight: 600;
+            color: var(--matrix-green);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(199, 36, 250, 0.2);
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Background -->
+    <div id="spline-bg">
+        <spline-viewer url="https://prod.spline.design/C46ljdioqgxtqHqG/scene.splinecode"></spline-viewer>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">NEX CORPORATION</div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#proof">Proof</a>
+            <a href="https://discord.gg/gPgctVwrRA" target="_blank" class="discord-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.472.52.92.822 1.34a.051.051 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                </svg>
+                Join Discord
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>UNLEASH UNDETECTABLE POWER IN FREE FIRE</h1>
+        <div id="typing"></div>
+        <p>Dominate with our elite PC shell panel. Military-grade encryption. AI anti-ban. Used by top players worldwide.</p>
+        <a href="#pricing" class="buy-btn" style="max-width: 250px;">GET ACCESS NOW</a>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>PREMIUM FEATURES</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Military Encryption</h3>
+                <p class="feature-desc">256-bit AES encryption makes your gameplay completely invisible to detection systems.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI Anti-Ban</h3>
+                <p class="feature-desc">Neural networks adapt to mimic human behavior patterns in real-time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Instant Updates</h3>
+                <p class="feature-desc">Auto-updating system ensures continuous protection against new patches.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👁️</div>
+                <h3 class="feature-title">Advanced ESP</h3>
+                <p class="feature-desc">Full environment scan with customizable player highlighting and item tracking.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Smart Aimbot</h3>
+                <p class="feature-desc">Human-like aiming with adjustable reaction time and hitbox prioritization.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Undetectable</h3>
+                <p class="feature-desc">Zero detection rate across 10,000+ active users for 12+ months.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2>PRICING PLANS</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">BASIC</div>
+                <div class="plan-price">$14.99</div>
+                <ul class="plan-features">
+                    <li>Basic Aimbot</li>
+                    <li>ESP Boxes</li>
+                    <li>24hr Updates</li>
+                    <li>Standard Protection</li>
+                    <li>Email Support</li>
+                </ul>
+                <a href="#" class="buy-btn">BUY NOW</a>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">POPULAR</div>
+                <div class="plan-name">PRO</div>
+                <div class="plan-price">$29.99</div>
+                <ul class="plan-features">
+                    <li>Advanced Aimbot</li>
+                    <li>Full ESP System</li>
+                    <li>Live Updates</li>
+                    <li>AI Anti-Ban</li>
+                    <li>Priority Support</li>
+                    <li>Config Presets</li>
+                </ul>
+                <a href="#" class="buy-btn">BUY NOW</a>
+            </div>
+            <div class="pricing-card">
+                <div class="plan-name">ELITE</div>
+                <div class="plan-price">$59.99</div>
+                <ul class="plan-features">
+                    <li>Perfect Aimbot</li>
+                    <li>ESP + Radar</li>
+                    <li>Instant Updates</li>
+                    <li>Military Encryption</li>
+                    <li>24/7 VIP Support</li>
+                    <li>Custom Configs</li>
+                    <li>Lifetime Updates</li>
+                </ul>
+                <a href="#" class="buy-btn">BUY NOW</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Section -->
+    <section id="proof" class="proof">
+        <h2>PROOF OF QUALITY</h2>
+        <div class="proof-grid">
+            <div class="proof-card">
+                <p class="proof-text">"Used NEX CORP for 8 months straight - not a single ban. The AI behavior masking is indistinguishable from human play."</p>
+                <p class="proof-author">- FF_ProPlayer (Ace Tier)</p>
+            </div>
+            <div class="proof-card">
+                <p class="proof-text">"My headshot rate went from 23% to 87% overnight. The config system lets you dial in perfect human-like aiming."</p>
+                <p class="proof-author">- xSniperGod (Top 500)</p>
+            </div>
+            <div class="proof-card">
+                <p class="proof-text">"Customer support helped me bypass the new anti-cheat within 2 hours of patch release. Worth every penny."</p>
+                <p class="proof-author">- PhantomHacker</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="disclaimer">
+            This is a fictional product for demonstration purposes only. We do not condone cheating in online games. 
+            This template showcases web design techniques and should not be used for actual cheat distribution.
+        </p>
+    </footer>
+
+    <script>
+        const messages = [
+            "NEX ON TOP",
+            "MADE BY DETTOLLL._"
+        ];
+
+        let currentText = 0;
+        let charIndex = 0;
+        const typingElement = document.getElementById("typing");
+
+        function typeLoop() {
+            if (charIndex < messages[currentText].length) {
+                typingElement.innerHTML += messages[currentText].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeLoop, 100);
+            } else {
+                setTimeout(eraseLoop, 1500);
+            }
+        }
+
+        function eraseLoop() {
+            if (charIndex > 0) {
+                typingElement.innerHTML = messages[currentText].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(eraseLoop, 50);
+            } else {
+                currentText = (currentText + 1) % messages.length;
+                setTimeout(typeLoop, 500);
+            }
+        }
+
+        window.onload = typeLoop;
+    </script>
+</body>
+</html>
